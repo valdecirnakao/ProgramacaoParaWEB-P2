@@ -1,0 +1,90 @@
+<div class="container py-3">
+  <!-- Topo -->
+  <div class="row align-items-center">
+    <div class="col-md-12">
+      <img src="assets/logo.png" type="button" routerLink="/login" class="img-fluid" style="max-height: 60px;" alt="Logo">
+      <button class="btn btn-outline-danger float-end" (click)="logout()">Sair</button>
+    </div>
+  </div>
+
+  <!-- Barra de busca -->
+  <div class="row">
+    <div class="col-12 mt-3">
+      <div class="input-group w-100 mt-4 position-relative">
+        <input type="text" class="form-control" placeholder="Buscar produtos..." [(ngModel)]="busca"
+            (input)="filtrarProdutos()"
+            (focus)="mostrarSugestoes = true"
+            (blur)="ocultarSugestoesComAtraso()"/>
+        <ul *ngIf="mostrarSugestoes && sugestoes.length > 0"
+          class="list-group position-absolute w-100 z-3"
+          style="top: 100%; left: 0;">
+          <li class="list-group-item list-group-item-action"
+            *ngFor="let sugestao of sugestoes"
+              (mousedown)="selecionarSugestao(sugestao)">
+              {{ sugestao }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <div class="row mt-4">
+    <div class="col text-center">
+      <div class="card bg-dark text-white">
+        <div class="card-body">RESUMO DO PEDIDO</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resumo do Pedido -->
+  <div *ngIf="pedido" class="mt-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title mb-3">
+          Pedido #{{ pedido.id }}
+        </h4>
+        <p>
+          <strong>Usuário:</strong> {{ pedido.usuario?.nome }}
+        </p>
+        <p>
+          <strong>Endereço para Entrega:</strong>
+          {{ pedido.logradouro }}, {{ pedido.numeroEndereco }}
+          <span *ngIf="pedido.complementoEndereco">, {{ pedido.complementoEndereco }}</span>
+          , {{ pedido.bairro }}, {{ pedido.cidade }}-{{ pedido.estado }}, CEP: {{ pedido.cep }}
+        </p>
+
+        <h5 class="mt-4 mb-2">Itens do Pedido</h5>
+        <div class="table-responsive">
+          <table class="table table-bordered text-center align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Produto</th>
+                <th>Imagem</th>
+                <th>Quantidade</th>
+                <th>Preço Unitário</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of pedido.itens">
+                <td>{{ item.produto?.nome }}</td>
+                <td>
+                  <img *ngIf="item.produto?.imagem" [src]="item.produto?.imagem" alt="{{ item.produto?.nome }}" class="img-fluid" style="max-height: 100px;">
+                </td>
+                <td class="text-center">{{ item.quantidade }}</td>
+                <td>R$ {{ item.precoUnitario | number:'1.2-2' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h5 class="text-end mt-3">
+          <strong>Total:</strong>
+          <span class="text-success">R$ {{ pedido.total | number:'1.2-2' }}</span>
+        </h5>
+        <div class="text-center mt-4">
+          <button class="btn btn-outline-danger float-end" (click)="logout()">Sair</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

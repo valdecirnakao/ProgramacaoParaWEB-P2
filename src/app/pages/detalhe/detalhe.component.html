@@ -1,0 +1,60 @@
+<div class="container py-3">
+  <!-- Topo -->
+  <div class="row align-items-center text-center text-md-start">
+    <!-- Logo -->
+    <div class="col-12 col-md-3 mb-2 mb-md-0">
+      <img src="assets/logo.png" type="button" routerLink="/login" class="img-fluid" style="max-height: 60px;" alt="Logo"> 
+    </div>
+    <div class="col-12 col-md-3 text-md-end order-2 order-md-3">
+      <button class="btn btn-outline-danger float-end" (click)="logout()">Sair</button>
+    </div>
+        <!-- Barra de busca (centralizada em telas maiores, embaixo em telas pequenas) -->
+        <div class="col-12 col-md-6 order-3 order-md-2 mt-3 mt-md-0">
+          <div class="input-group w-100">
+            <input type="text" class="form-control" placeholder="Buscar produtos..." [(ngModel)]="produto.nome"
+            (input)="filtrarProdutos()"
+            (focus)="mostrarSugestoes = true"
+            (blur)="ocultarSugestoesComAtraso()"/>
+            <ul *ngIf="mostrarSugestoes && sugestoes.length > 0"
+              class="list-group position-absolute w-100 z-3"
+              style="top: 100%; left: 0;">
+            <li class="list-group-item list-group-item-action"
+                *ngFor="let sugestao of sugestoes"
+                (click)="selecionarSugestao(sugestao)">
+              {{ sugestao }}
+            </li>
+          </ul>
+          </div>
+        </div>
+  </div>
+
+    <!-- Menu -->
+    <div class="row mt-4">
+      <div class="col text-center">
+        <div class="card bg-dark text-white">
+          <div class="card-body">DETALHES DO PRODUTO</div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Detalhes do produto -->
+    <div class="row mt-5 align-items-start">
+      <!-- Imagem do produto -->
+      <div class="col-12 col-md-4 text-center mb-4 mb-md-0">
+        <img [src]="produto?.imagem" alt="Imagem do produto" class="img-fluid rounded">
+      </div>
+  
+      <!-- Nome e descrição -->
+      <div class="col-12 col-md-8">
+        <h3>{{ produto?.nome }}</h3>
+        <p class="mt-3">{{ produto?.descricao }}</p>
+        <p class="mt-3">{{ produto?.detalhe }}</p>
+
+        <div class="mt-4 d-flex gap-2 mt-3">
+          <button class="btn btn-success btn-lg" (click)="comprar()">Comprar</button>
+          <button routerLink="/vitrine" class="btn btn-dark btn-lg">Produtos</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

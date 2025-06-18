@@ -1,0 +1,44 @@
+<div class="container-fluid mt-4">
+  <div class="d-flex justify-content-end mb-2">
+    <button class="btn btn-outline-danger" (click)="irParaLogin()">Sair</button>
+  </div>
+  <h2 style="text-align: center;">Administração de Produtos</h2>
+  <form (ngSubmit)="salvar()" #form="ngForm" class="mb-4">
+    <input [(ngModel)]="produto.nome" name="nome" placeholder="Nome" class="form-control mb-2" required>
+    <input [(ngModel)]="produto.qtd" name="qtd" type="number" placeholder="Quantidade" class="form-control mb-2" required>
+    <input [(ngModel)]="produto.preco" name="preco" type="number" placeholder="Preço" class="form-control mb-2" required>
+    <input [(ngModel)]="produto.imagem" name="imagem" placeholder="URL da Imagem" class="form-control mb-2">
+    <textarea [(ngModel)]="produto.detalhe" name="detalhe" placeholder="Detalhes" class="form-control mb-2"></textarea>
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="limpar()">Novo</button>
+  </form>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center;">Nome</th>
+        <th style="text-align: center;">Quantidade</th>
+        <th style="width: 100px; text-align: center;">Preço</th>
+        <th style="text-align: center;">Imagem</th>
+        <th style="text-align: center;">Detalhe</th>
+        <th style="width: 170px; text-align: center;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of produtos">
+        <td>{{ p.nome }}</td>
+        <td class="align-middle text-center">{{ p.qtd }}</td>
+        <td class="align-middle text-center">R$ {{ p.preco | number:'1.2-2' }}</td>
+        <td class="align-middle text-center">
+          <img [src]="p.imagem" alt="Imagem" width="50" *ngIf="p.imagem">
+        </td>
+        <td>{{ p.detalhe }}</td>
+        <td class="align-middle">
+          <div class="d-flex justify-content-center align-items-center gap-2">
+            <button class="btn btn-warning btn-sm" (click)="editar(p)">Editar</button>
+            <button class="btn btn-danger btn-sm ms-2" (click)="remover(p.id)">Excluir</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

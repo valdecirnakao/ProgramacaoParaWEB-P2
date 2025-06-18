@@ -1,0 +1,73 @@
+<div class="container py-3">
+  <!-- Topo -->
+  <div class="col-md-12 sm-mt-0">
+    <img src="assets/logo.png" type="button" routerLink="/login" class="img-fluid" style="max-height: 60px;" alt="Logo">
+    <button class="btn btn-outline-danger float-end" (click)="logout()">Sair</button>
+  <!-- Barra de busca (centralizada em telas maiores, embaixo em telas pequenas) -->
+    <div class="col-12 col-md-12 order-3 order-md-2 mt-3 mt-md-0">
+      <div class="input-group w-100 mt-4">
+        <input type="text" class="form-control" placeholder="Buscar produtos..." [(ngModel)]="busca"
+            (input)="filtrarProdutos()"
+            (focus)="mostrarSugestoes = true"
+            (blur)="ocultarSugestoesComAtraso()"/>
+            <ul *ngIf="mostrarSugestoes && sugestoes.length > 0"
+              class="list-group position-absolute w-100 z-3"
+              style="top: 100%; left: 0;">
+              <li class="list-group-item list-group-item-action"
+                *ngFor="let sugestao of sugestoes"
+                  (click)="selecionarSugestao(sugestao)">
+                  {{ sugestao }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+  <!-- Menu -->
+  <div class="row mt-4">
+    <div class="col text-center">
+      <div class="card bg-dark text-white">
+        <div class="card-body">CONTAINER DE COMPRAS</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cesta -->
+  <div class="mt-4">
+    <table class="table table-bordered text-center align-middle">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Imagem</th>
+          <th>Qtd</th>
+          <th>Valor</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let produto of produtos">
+          <td>{{ produto.nome }}</td>
+          <td><img [src]="produto.imagem" alt="Imagem" width="50" *ngIf="produto.imagem"></td>
+
+          <td>
+            <input type="number" [(ngModel)]="produto.qtd" min="1" class="form-control form-control-sm w-100" style="min-width: 30px; text-align: center;"
+                   (change)="atualizarQtd(produto, produto.qtd)">
+          </td>
+          <td> {{ produto.preco * produto.qtd | currency:'BRL' }}</td>
+          <td>
+            <button (click)="removerItem(produto.id)" class="btn btn-danger btn-sm">
+              Remover
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h5 class="text-end">Total: <strong>R$ {{ total | number: '1.2-2' }}</strong></h5>
+
+    <div class="text-center mt-3">
+      <button class="btn btn-danger me-3" (click)="limparCesta()">Limpar</button>
+      <button class="btn btn-success me-3" (click)="finalizarCompra()">Enviar Pedido</button>
+      <button routerLink="/vitrine" class="btn btn-dark me-3">Produtos</button>
+    </div>
+  </div>
+</div>

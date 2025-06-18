@@ -1,0 +1,113 @@
+<div class="container-fluid mt-4">
+  <div class="d-flex justify-content-end mb-2">
+    <button class="btn btn-outline-danger" (click)="irParaLogin()">Sair</button>
+  </div>
+  <h2 class="text-center">Administração de Usuários</h2>
+
+  <form (ngSubmit)="salvar()" #form="ngForm" class="mb-4">
+    <div class="row justify-content-center">
+      <div class="col-md-2 mb-2">
+        <label for="cpf" class="form-label">CPF</label>
+        <input [(ngModel)]="usuario.cpf" name="cpf" placeholder="CPF" class="form-control" required (blur)="formatarCPF()">
+      </div>
+      <div class="col-md-4 mb-2">
+        <label for="nome" class="form-label">Nome</label>
+        <input [(ngModel)]="usuario.nome" name="nome" placeholder="Nome" class="form-control" required>
+      </div>
+      <div class="col-md-4 mb-2">
+        <label for="email" class="form-label">E-mail</label>
+        <input [(ngModel)]="usuario.email" name="email" placeholder="Email" class="form-control" required>
+      </div>
+      <div class="col-md-2 mb-2">
+        <label for="senha" class="form-label">Senha</label>
+        <input [(ngModel)]="usuario.senha" name="senha" type="password" placeholder="Senha" class="form-control" required>
+      </div>
+      <div class="col-md-3 mb-2">
+        <label for="whatsapp" class="form-label">WhatsApp</label>
+        <input [(ngModel)]="usuario.whatsapp" name="whatsapp" placeholder="WhatsApp" class="form-control" (blur)="formatarWhatsapp()">
+      </div>
+      <div class="col-md-3 mb-2">
+        <label for="whatsappapikey" class="form-label">WhatsApp API Key</label>
+        <input [(ngModel)]="usuario.whatsappapikey" name="whatsappapikey" placeholder="WhatsApp API Key" class="form-control">
+      </div>
+      <div class="col-md-2 mb-2">
+        <label for="cep" class="form-label">CEP</label>
+        <input [(ngModel)]="usuario.cep" name="cep" placeholder="CEP" class="form-control" (blur)="formatarCEP()">
+      </div>
+      <div class="col-md-2 mb-2">
+        <label for="numero_endereco" class="form-label">Número</label>
+        <input [(ngModel)]="usuario.numeroEndereco" name="numero_endereco" placeholder="Número" class="form-control">
+      </div>
+      <div class="col-md-2 mb-2">
+        <label for="complemento_endereco" class="form-label">Complemento</label>
+        <input [(ngModel)]="usuario.complementoEndereco" name="complemento_endereco" placeholder="Complemento" class="form-control">
+      </div>
+            <div class="col-md-4 mb-2">
+        <label for="logradouro" class="form-label">Logradouro</label>
+        <input [(ngModel)]="usuario.logradouro" name="logradouro" placeholder="Logradouro" class="form-control">
+      </div>
+      <div class="col-md-3 mb-2">
+        <label for="bairro" class="form-label">Bairro</label>
+        <input [(ngModel)]="usuario.bairro" name="bairro" placeholder="Bairro" class="form-control">
+      </div>
+      <div class="col-md-3 mb-2">
+        <label for="cidade" class="form-label">Cidade</label>
+        <input [(ngModel)]="usuario.cidade" name="cidade" placeholder="Cidade" class="form-control">
+      </div>
+      <div class="col-md-2 mb-2">
+        <label for="estado" class="form-label">Estado</label>
+        <input [(ngModel)]="usuario.estado" name="estado" placeholder="Estado" class="form-control">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col text-end mt-2">
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <button type="button" class="btn btn-secondary ms-2" (click)="limpar()">Novo</button>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th class="text-center">CPF</th>
+        <th class="text-center">Nome</th>
+        <th class="text-center">E-mail</th>
+        <th class="text-center">Senha</th>
+        <th class="text-center">WhatsApp</th>
+        <th class="text-center">WhatsKey</th>
+        <th class="text-center">CEP</th>
+        <th class="text-center">Logradouro</th>
+        <th class="text-center">Nº</th>
+        <th class="text-center">Complemento</th>
+        <th class="text-center">Bairro</th>
+        <th class="text-center">Cidade</th>
+        <th class="text-center">Estado</th>
+        <th class="text-center">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of usuarios">
+        <td class="align-middle text-center">{{ u.cpf }}</td>
+        <td class="align-middle text-center">{{ u.nome }}</td>
+        <td class="align-middle text-center">{{ u.email }}</td>
+        <td class="align-middle text-center" type="password">{{ u.senha }}</td>
+        <td class="align-middle text-center">{{ u.whatsapp }}</td>
+        <td class="align-middle text-center">{{ u.whatsappapikey }}</td>
+        <td class="align-middle text-center">{{ u.cep }}</td>
+        <td class="align-middle text-center">{{ u.logradouro }}</td>
+        <td class="align-middle text-center">{{ u.numeroEndereco }}</td>
+        <td class="align-middle text-center">{{ u.complementoEndereco }}</td>
+        <td class="align-middle text-center">{{ u.bairro }}</td>
+        <td class="align-middle text-center">{{ u.cidade }}</td>
+        <td class="align-middle text-center">{{ u.estado }}</td>
+        <td class="align-middle">
+          <div class="d-flex justify-content-center align-items-center gap-2">
+            <button class="btn btn-warning btn-sm" (click)="editar(u)">Editar</button>
+            <button class="btn btn-danger btn-sm ms-2" (click)="remover(u.id)">Excluir</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

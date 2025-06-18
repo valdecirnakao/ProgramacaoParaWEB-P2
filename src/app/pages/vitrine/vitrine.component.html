@@ -1,0 +1,51 @@
+<div class="container py-3">
+  <!-- Topo -->
+  <div class="col-md-12 sm-mt-0">
+    <img src="assets/logo.png" type="button" routerLink="/login" class="img-fluid" style="max-height: 60px;" alt="Logo"> 
+    <button class="btn btn-outline-danger float-end" (click)="logout()">Sair</button>
+  <!-- Barra de busca (centralizada em telas maiores, embaixo em telas pequenas) -->
+        <div class="col-12 col-md-12 order-3 order-md-2 mt-3 mt-md-0">
+          <div class="input-group w-100 mt-4">
+            <input type="text" class="form-control" placeholder="Buscar produtos..." [(ngModel)]="busca"
+            (input)="filtrarProdutos()"
+            (focus)="mostrarSugestoes = true"
+            (blur)="ocultarSugestoesComAtraso()"/>
+            <ul *ngIf="mostrarSugestoes && sugestoes.length > 0"
+              class="list-group position-absolute w-100 z-3"
+              style="top: 100%; left: 0;">
+            <li class="list-group-item list-group-item-action"
+                *ngFor="let sugestao of sugestoes"
+                (click)="selecionarSugestao(sugestao)">
+              {{ sugestao }}
+            </li>
+          </ul>
+          </div>
+        </div>
+  </div>
+
+  <!-- Menu -->
+  <div class="row mt-4">
+    <div class="col text-center">
+      <div class="card bg-dark text-white">
+        <div class="card-body">PRODUTOS</div>
+      </div>
+    </div>
+  </div>
+  <!-- Grid de produtos -->
+  <div class="row mt-4 g-4">
+    <div class="col-12 col-sm-6 col-md-4" *ngFor="let produto of produtosFiltrados">
+      <div class="card h-100 text-center d-flex flex-column">
+        <img [src]="produto.imagem" class="card-img-top" alt="Produto" style="cursor: pointer;" (click)="verDetalhes(produto)">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ produto.nome }}</h5>
+          <p class="card-text">R$ {{ produto.preco }}</p>
+          
+          <div class="d-flex justify-content-center gap-2 mt-auto" id="grupobotoes">
+            <button class="btn btn-success" (click)="comprar(produto)">Comprar</button>
+            <button routerLink="/detalhes" [queryParams]="{ id: produto.id, nome: produto.nome, preco: produto.preco, imagem: produto.imagem, detalhe: produto.detalhe}" class="btn btn-warning">Detalhes</button>
+          </div>
+        </div>
+      </div>
+    </div>    
+  </div>
+</div>
